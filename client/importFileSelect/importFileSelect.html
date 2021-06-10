@@ -1,0 +1,26 @@
+<template name="importFileSelect">
+    <h2>Import a .CSV File</h2>
+    <p>Step1: Select a file to import.</p>
+    <div class="row">
+        <div class="column contentInfo">
+            <label class="custom-file-upload">
+            <input type="file" name="ebayFile" id="ebayFile" accept=".csv" />
+            Click here to Select a .csv file to import
+        </label>
+        </div>
+        <div class="column contentInfo">
+            <lable id="customFileUpload" class="custom-file-waiting">
+                selected file will show here
+            </lable>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="column">
+            <button id="cancleParse">Cancel</button>
+        </div>
+        <div class="column">
+            <button id="parseFileBtn" class="right">Import</button>
+        </div>
+    </div>
+</template>

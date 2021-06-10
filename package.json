@@ -1,0 +1,12 @@
+{
+  "name": "eBayToDB",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.11.2",
+    "jquery": "^3.5.1",
+    "meteor-node-stubs": "^1.0.1"
+  }
+}
