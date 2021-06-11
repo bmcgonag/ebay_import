@@ -1,7 +1,7 @@
-
+import {ImportData} from '../../imports/api/importData';
 
 Template.importFileSelect.onCreated(function() {
-
+    this.subscribe("importObject");
 });
 
 Template.importFileSelect.onRendered(function() {
@@ -36,10 +36,17 @@ Template.importFileSelect.events({
                     console.log("Waiting...");
                     console.dir(results);
                     Session.set("importResults", results);
-                    FlowRouter.go('/verifyData');
+                    Meteor.call("import_parsedData", results, function(err, result) {
+                        if (err) {
+                            console.log("Error calling the import API: " + err);
+                        } else {
+                            console.log("Import API Called Successfully! Result is: " + result);
+                        }
+                    });
+                    // FlowRouter.go('/verifyData');
                 },
                 error: function(error) {
-                    console.log("Error on import: " + error);
+                    console.log("Error on parse: " + error);
                 },
             });
         }
