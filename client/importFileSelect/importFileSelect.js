@@ -5,11 +5,13 @@ Template.importFileSelect.onCreated(function() {
 });
 
 Template.importFileSelect.onRendered(function() {
-
+    Session.set("infoImported", false);
 });
 
 Template.importFileSelect.helpers({
-
+    infoImported: function() {
+        return Session.get("infoImported");
+    },
 });
 
 Template.importFileSelect.events({
@@ -39,8 +41,10 @@ Template.importFileSelect.events({
                     Meteor.call("import_parsedData", results, function(err, result) {
                         if (err) {
                             console.log("Error calling the import API: " + err);
+                            Session.set("infoImported", false);
                         } else {
-                            console.log("Import API Called Successfully! Result is: " + result);
+                            // console.log("Import API Called Successfully! Result is: " + result);
+                            Session.set("infoImported", true);
                         }
                     });
                     // FlowRouter.go('/verifyData');

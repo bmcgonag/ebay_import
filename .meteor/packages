@@ -22,12 +22,14 @@ shell-server@0.5.0            # Server-side component of the `meteor shell` comm
 # autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 
-momentjs:moment         # get Date / Time in all kinds of great formats
+# momentjs:moment         # get Date / Time in all kinds of great formats
 kadira:flow-router      # Routing for page loading
 kadira:blaze-layout
 harrison:papa-parse    # parsing package to get csv to json
 meteorhacks:aggregate
+raix:handlebar-helpers
 
 sacha:spin                  # spinner for loading
 dynamic-import@0.6.0
 session@1.2.0                     # handles session variables in production sys$
+msavin:mongol

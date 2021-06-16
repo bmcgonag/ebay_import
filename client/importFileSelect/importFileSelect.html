@@ -23,4 +23,14 @@
             <button id="parseFileBtn" class="right">Import</button>
         </div>
     </div>
+
+    {{#if $eq infoImported true}}
+    <div id="showInfo">
+        {{#if Template.subscriptionsReady}}
+            {{> verifyData}}
+        {{else}}
+            {{> spinner}}
+        {{/if}}
+    </div>
+    {{/if}}
 </template>

@@ -1,6 +1,7 @@
 import { Meter } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import dayjs from 'dayjs';
 
 export const ImportData = new Mongo.Collection('import_data');
 
@@ -82,20 +83,20 @@ Meteor.methods({
                 BuyerUsername: results.data[i].['Buyer Username'],
                 CustomLabel: results.data[i].['Custom Label'],
                 ItemNumber: results.data[i].['Item Number'],
-                ItemTitle: results.data[i].['Item TItle'],
+                ItemTitle: results.data[i].['Item Title'],
                 Size: size,
                 FeedbackLeft: results.data[i].['Feedback Left'],
                 FeedbackReceived: results.data[i].['Feedback Received'],
-                MaximumEstimatedDeliveryDate: moment(results.data[i].['Maximum Estimated Delivery Date']).format('YYYY-MM-DD'),
-                MinimumEstimatedDeliveryData: moment(results.data[i].['Minimum Estimated Delivery Date']).format('YYYY-MM-DD'),
+                MaximumEstimatedDeliveryDate: dayjs(results.data[i].['Maximum Estimated Delivery Date']).format('YYYY-MM-DD'),
+                MinimumEstimatedDeliveryData: dayjs(results.data[i].['Minimum Estimated Delivery Date']).format('YYYY-MM-DD'),
                 MyItemNote: results.data[i].['My Item Note'],
                 OrderNumbeer: results.data[i].['Order Number'],
-                PaidOnDate: moment(results.data[i].['Paid On Date']).format('YYYY-MM-DD'),
+                PaidOnDate: dayjs(results.data[i].['Paid On Date']).format('YYYY-MM-DD'),
                 PayPalTransactionID: results.data[i].['PayPal Transaction ID'],
                 PaymentMethod: results.data[i].['Payment Method'],
                 Quantity: results.data[i].Quantity,
-                SaleDate: moment(results.data[i].['Sale Date']).format('YYYY-MM-DD'),
-                ShipByDate: moment(results.data[i].['Ship By Date']).format('YYYY-MM-DD'),
+                SaleDate: dayjs(results.data[i].['Sale Date']).format('YYYY-MM-DD'),
+                ShipByDate: dayjs(results.data[i].['Ship By Date']).format('YYYY-MM-DD'),
                 ShipToAddress1: results.data[i].['Ship To Address 1'],
                 ShipToAddress2: results.data[i].['Ship To Address 2'],
                 ShipToCity: results.data[i].['Ship To City'],
@@ -104,7 +105,7 @@ Meteor.methods({
                 ShipToCountry: results.data[i].['Ship To Country'],
                 ShipToName: results.data[i].['Ship To Name'],
                 ShipToPhone: results.data[i].['Ship To Phone'],
-                ShippedOnDate: moment(results.data[i].['Shipped On Date']).format('YYYY-MM-DD'),
+                ShippedOnDate: dayjs(results.data[i].['Shipped On Date']).format('YYYY-MM-DD'),
                 eBayCollectedTax: results.data[i].['eBay Collected Tax'],
                 ShippingAndHandling: results.data[i].['Shipping And Handling'],
                 ShippingService: results.data[i].['Shipping Service'],
@@ -121,9 +122,9 @@ Meteor.methods({
                 GlobalShippingReferenceID: results.data[i].['Global Shipping Reference ID'],
                 ClickAndCollect: results.data[i].['Click And Collect'],
                 ClickAndCollectReferenceNumbeer: results.data[i].['Click And Collect Reference Number'],
-                Year: moment(results.data[i].['Sale Date']).format('YYYY'),
-                SaleDayName: moment(results.data[i].['Sale Date']).format('dddd'),
-                SaleMonthName: moment(results.data[i].['Sale Date']).format('MMMM'),
+                Year: dayjs(results.data[i].['Sale Date']).format('YYYY'),
+                SaleDayName: dayjs(results.data[i].['Sale Date']).format('dddd'),
+                SaleMonthName: dayjs(results.data[i].['Sale Date']).format('MMMM'),
             });
         }
     },

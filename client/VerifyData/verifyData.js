@@ -1,5 +1,8 @@
-Template.verifyData.onCreated(function() {
+import { ImportData } from '../../imports/api/importData.js';
 
+
+Template.verifyData.onCreated(function() {
+    this.subscribe("importObject");
 });
 
 Template.verifyData.onRendered(function() {
@@ -7,10 +10,9 @@ Template.verifyData.onRendered(function() {
 });
 
 Template.verifyData.helpers({
-    parsedOut: function() {
-        let parsedInfo = Session.get("importResults");
-        return parsedInfo;
-    }
+    items: function() {
+        return ImportData.find({});
+    },
 });
 
 Template.verifyData.events({

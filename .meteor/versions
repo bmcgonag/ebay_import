@@ -16,6 +16,7 @@ ddp@1.4.0
 ddp-client@2.4.1
 ddp-common@1.4.0
 ddp-server@2.3.3
+deps@1.0.12
 diff-sequence@1.1.1
 dynamic-import@0.6.0
 ecmascript@0.15.1
@@ -43,6 +44,7 @@ meteor@1.9.3
 meteor-base@1.4.0
 meteorhacks:aggregate@1.3.0
 meteorhacks:collection-utils@1.2.0
+meteortoys:toykit@10.0.0
 minifier-css@1.5.4
 minifier-js@2.6.0
 minimongo@1.6.2
@@ -51,16 +53,17 @@ mobile-status-bar@1.1.0
 modern-browsers@0.1.5
 modules@0.16.0
 modules-runtime@0.12.0
-momentjs:moment@2.29.1
 mongo@1.11.1
 mongo-decimal@0.1.2
 mongo-dev-server@1.1.0
 mongo-id@1.0.8
 mongo-livedata@1.0.12
+msavin:mongol@10.0.1
 npm-mongo@3.9.0
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 promise@0.11.2
+raix:handlebar-helpers@0.2.5
 random@1.2.0
 react-fast-refresh@0.1.1
 reactive-dict@1.3.0
