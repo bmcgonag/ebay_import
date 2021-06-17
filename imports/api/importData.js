@@ -66,9 +66,147 @@ Meteor.methods({
                 }
             }
             
+  
+            let size2 = "";
+            let sizeExists2 = results.data[i].['Item Title'].split(' ');
+            for (j=0; j < sizeExists2.length; j++) {
+                switch(sizeExists2[j]) {
+                    case "XSmall":
+                        size2 = "XS";
+                        break;
+                    case "Small":
+                        size2 = "S";
+                        break;
+                    case "00":
+                        size2 = "XS";
+                        break;
+                    case "0":
+                        size2 = "XS";
+                        break;
+                    case "1":
+                        size2 = "XS";
+                        break;
+                    case "2":
+                        size2 = "XS";
+                        break;
+                    case "3":
+                        size2 = "S";
+                        break;
+                    case "4":
+                        size2 = "S";
+                        break;
+                    case "5":
+                        size2 = "S";
+                        break;
+                    case "SP":
+                        size2 = "S";
+                        break;
+                    case "6":
+                        size2 = "M";
+                        break;
+                    case "7":
+                        size2 = "M";
+                        break;
+                    case "8":
+                        size2 = "M";
+                        break;
+                    case "9":
+                        size2 = "M";
+                        break;
+                    case "10":
+                        size2 = "M";
+                        break;
+                    case "11":
+                        size2 = "M";
+                        break;
+                    case "Med":
+                        size2 = "M";
+                        break;
+                    case "Medium":
+                        size2 = "M";
+                        break;
+                    case "12":
+                        size2 = "L";
+                        break;
+                    case "13":
+                        size2 = "L";
+                        break;
+                    case "14":
+                        size2 = "L";
+                        break;
+                    case "Large":
+                        size2 = "L";
+                        break;
+                    case "15":
+                        size2 = "XL";
+                        break;
+                    case "XL":
+                        size2 = "XL";
+                        break;
+                    case "16":
+                        size2 = "XL";
+                        break;
+                    case "XLarge":
+                        size2 = "XL";
+                        break;
+                    case "X-Large":
+                        size2 = "XL";
+                        break;
+                    case "XL":
+                        size2 = "XL";
+                        break;
+                    case "17":
+                        size2 = "2X";
+                        break;
+                    case "2X":
+                        size2 = "2X";
+                        break;
+                    case "18":
+                        size2 = "2X";
+                        break;
+                    case "19":
+                        size2 = "2X";
+                        break;
+                    case "20":
+                        size2 = "2X";
+                        break;
+                    case "2XL":
+                        size2 = "2X";
+                        break;
+                    case "3X":
+                        size2 = "3X";
+                        break;
+                    case "3XL":
+                        size2 = "3X";
+                        break;
+                    case "3X-Large":
+                        size2 = "3X";
+                        break;
+                    case "21":
+                        size2 = "3X";
+                        break;
+                    case "22":
+                        size2 = "3X";
+                        break;
+                    case "23":
+                        size2 = "3X";
+                        break;
+                    case "24":
+                        size2 = "3X";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
+            if (size == "") {
+                if (size2 == "") {
+                    size = "";
+                } else {
+                    size = size2;
+                }
+            }
 
-            if (results.data[i].['Item Title'])
             ImportData.insert({
                 SalesRecordNumber: results.data[i].['Sales Record Number'],
                 BuyerAddress1: results.data[i].['Buyer Address 1'],
@@ -126,6 +264,28 @@ Meteor.methods({
                 SaleDayName: dayjs(results.data[i].['Sale Date']).format('dddd'),
                 SaleMonthName: dayjs(results.data[i].['Sale Date']).format('MMMM'),
             });
+        }
+    },
+    'fix_duplicate_srn' () {
+        let imported = ImportData.find({}).fetch();
+        let numRet = imported.length;
+        console.dir(imported);
+        console.log("Length: " + numRet);
+
+        let j = 0;
+        for (i = 0; i < numRet; i++) {
+            let k = i+1;
+            if (i != (numRet-1)) {
+                if (imported[i].SalesRecordNumber == imported[k].SalesRecordNumber) {
+                    j++;
+                    ImportData.update({ _id: imported[i+1]._id }, 
+                        {
+                            $set: {
+                                SalesRecordNumber: imported[i+1].SalesRecordNumber + ("000" + j),
+                            },
+                        });
+                }
+            }
         }
     },
 });

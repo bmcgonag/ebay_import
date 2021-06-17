@@ -1,23 +1,31 @@
 <template name="verifyData">
     <h2>Verification</h2>
     <p>Verify the information pulled from the file.</p>
-    
     <table>
         <thead>
             <tr>
                 <th>Sales Record Number</th>
-                <th>Item Title</th>
                 <th>Size</th>
+                <th>Item Title</th>
             </tr>
         </thead>
         <tbody>
-        {{#each item in items}}
+        {{#each items}}
             <tr>
                 <td>{{SalesRecordNumber}}</td>
-                <td>{{ItemTitle}}</td>
                 <td>{{Size}}</td>
+                <td>{{ItemTitle}}</td>
             </tr>
         {{/each}}
         </tbody>
     </table>
+    <br />
+    <div class="row">
+        <div class="column">
+            <button id="CleanUpDuplicateSRN">Fix Sales Record Numbers</button>
+        </div>
+        <div class="column">
+            <button id="SaveDataToMetabase">Save to Metabase</button>
+        </div>
+    </div>
 </template>

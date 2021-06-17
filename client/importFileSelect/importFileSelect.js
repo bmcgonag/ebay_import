@@ -56,4 +56,8 @@ Template.importFileSelect.events({
         }
 
     },
+    'click #showPrevImportedData' (event) {
+        event.preventDefault();
+        Session.set("infoImported", true);
+    },
 });
