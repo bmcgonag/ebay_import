@@ -12,9 +12,9 @@
         <tbody>
         {{#each items}}
             <tr>
-                <td>{{SalesRecordNumber}}</td>
-                <td>{{Size}}</td>
-                <td>{{ItemTitle}}</td>
+                <td id="SRN_{{_id}}" class="SRN">{{SalesRecordNumber}}</td>
+                <td id="Size_{{_id}}" class="Size"><input type="text" class="Size-Input" id="sizeInput_{{_id}}" value="{{Size}}" /></td>
+                <td id="IT_{{_id}}" class="IT">{{ItemTitle}}</td>
             </tr>
         {{/each}}
         </tbody>

@@ -288,4 +288,14 @@ Meteor.methods({
             }
         }
     },
+    'update_size' (itemid, sizeEntered) {
+        check(itemid, String);
+        check(sizeEntered, String);
+
+        return ImportData.update({ _id: itemid }, {
+            $set: {
+                Size: sizeEntered,
+            },
+        });
+    },
 });
