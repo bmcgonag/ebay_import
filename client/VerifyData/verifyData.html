@@ -21,11 +21,14 @@
     </table>
     <br />
     <div class="row">
+        {{#if $eq duplicate true}}
         <div class="column">
             <button id="CleanUpDuplicateSRN">Fix Sales Record Numbers</button>
         </div>
+        {{else}}
         <div class="column">
-            <button id="SaveDataToMetabase">Save to Metabase</button>
+            <button id="SaveDataToMetabase" class="green">Save to Metabase</button>
         </div>
+        {{/if}}
     </div>
 </template>

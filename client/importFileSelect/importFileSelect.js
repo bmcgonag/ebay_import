@@ -44,7 +44,7 @@ Template.importFileSelect.events({
                             Session.set("infoImported", false);
                         } else {
                             // console.log("Import API Called Successfully! Result is: " + result);
-                            Session.set("infoImported", true);
+                            FlowRouter.go('/verifyData');
                         }
                     });
                     // FlowRouter.go('/verifyData');
@@ -58,6 +58,6 @@ Template.importFileSelect.events({
     },
     'click #showPrevImportedData' (event) {
         event.preventDefault();
-        Session.set("infoImported", true);
+        FlowRouter.go('/verifyData');
     },
 });

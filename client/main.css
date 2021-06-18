@@ -6,3 +6,7 @@ body {
 .Size {
   cursor: pointer;
 }
+
+.green {
+  background-color: rgb(10, 170, 10);
+}
