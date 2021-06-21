@@ -1,0 +1,29 @@
+<template name="importDb">
+    <h2>Import From a Database</h2>
+    <p>Use this view to setup and import data from a SQL database (MySQL, MariaDB, PostgreSQL, etc). </p>
+    <br />
+    <div class="row">
+        <div class="column">
+            <input type="text" id="dbhost" class="dbhost" placeholder="DB Hostname or IP Address" />
+        </div>
+        <div class="column">
+            <input type="text" id="dbport" class="dbport" placeholder="DB Port Number" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <input type="text" id="dbuser" class="dbuser" placeholder="DB Username" />
+        </div>
+        <div class="column">
+            <input type="password" id="dbpass" class="dbpass" placeholder="DB Password" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <button id="testDBConnection">Test Connection</button>
+        </div>
+        <div class="column">
+            <button id="importFromDb" class="green right">Import from Database</button>
+        </div>
+    </div>
+</template>

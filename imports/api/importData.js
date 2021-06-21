@@ -299,7 +299,7 @@ Meteor.methods({
             },
         });
     },
-    'saveDataToMariaDB' () {
+    'pullDataFromMariaDB' () {
         // connect to mariadb
         const connection = mysql.createConnection({
             host: '192.168.7.125',

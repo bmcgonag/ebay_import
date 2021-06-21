@@ -19,6 +19,9 @@ Template.sidenav.events({
             case "importData":
                 FlowRouter.go('/');
                 break;
+            case "importDb":
+                FlowRouter.go('/importDb');
+                break;
             case "verifyData":
                 FlowRouter.go('/verifyData');
                 break;
