@@ -6,7 +6,7 @@ Template.verifyData.onCreated(function() {
 });
 
 Template.verifyData.onRendered(function() {
-    Session.set("duplicateState", true);
+
 });
 
 Template.verifyData.helpers({
@@ -15,37 +15,9 @@ Template.verifyData.helpers({
         console.dir(data);
         return data;
     },
-    duplicate: function() {
-        return Session.get("duplicateState");
-    }
 });
 
 Template.verifyData.events({
-    'click #CleanUpDuplicateSRN' (event) {
-        event.preventDefault();
-
-        Meteor.call('fix_duplicate_srn', function(err, result) {
-            if (err) {
-                console.log("There was an error fixing the duplicate SRNs: " + err);
-            } else {
-                console.log("SRNs updated to remove duplicates successfully.");
-                Session.set("duplicateState", false);
-            }
-        });
-    },
-    'click #SaveDataToMetabase' (event) {
-        event.preventDefault();
-        console.log("Clicked the Save button");
-        // Let's call a meteor method that will pull the mongo
-        // db data, and save it to mariadb via mysql queries.
-        Meteor.call('saveDataToMariaDB', function (err, result) {
-            if (err) {
-                console.log("Error saving data to MariaDB: " + err);
-            } else {
-                console.log("Successfully saved data to MariaDB!");
-            }
-        });
-    },
     'change .Size-Input' (event) {
         event.preventDefault();
         let edit_id = event.currentTarget.id;

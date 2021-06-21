@@ -229,7 +229,7 @@ Meteor.methods({
                 MaximumEstimatedDeliveryDate: dayjs(results.data[i].['Maximum Estimated Delivery Date']).format('YYYY-MM-DD'),
                 MinimumEstimatedDeliveryData: dayjs(results.data[i].['Minimum Estimated Delivery Date']).format('YYYY-MM-DD'),
                 MyItemNote: results.data[i].['My Item Note'],
-                OrderNumbeer: results.data[i].['Order Number'],
+                OrderNumber: results.data[i].['Order Number'],
                 PaidOnDate: dayjs(results.data[i].['Paid On Date']).format('YYYY-MM-DD'),
                 PayPalTransactionID: results.data[i].['PayPal Transaction ID'],
                 PaymentMethod: results.data[i].['Payment Method'],
@@ -260,7 +260,7 @@ Meteor.methods({
                 GlobalShippingProgram: results.data[i].['GlobalShippingProgram'],
                 GlobalShippingReferenceID: results.data[i].['Global Shipping Reference ID'],
                 ClickAndCollect: results.data[i].['Click And Collect'],
-                ClickAndCollectReferenceNumbeer: results.data[i].['Click And Collect Reference Number'],
+                ClickAndCollectReferenceNumber: results.data[i].['Click And Collect Reference Number'],
                 Year: dayjs(results.data[i].['Sale Date']).format('YYYY'),
                 SaleDayName: dayjs(results.data[i].['Sale Date']).format('dddd'),
                 SaleMonthName: dayjs(results.data[i].['Sale Date']).format('MMMM'),
@@ -300,10 +300,6 @@ Meteor.methods({
         });
     },
     'saveDataToMariaDB' () {
-        let dataToImport = ImportData.find({}).fetch();
-
-        let numberFiles = dataToImport.length;
-
         // connect to mariadb
         const connection = mysql.createConnection({
             host: '192.168.7.125',
@@ -312,23 +308,88 @@ Meteor.methods({
             database: 'ebay_data'
         });
 
+        const bound = Meteor.bindEnvironment((callback) => {callback();});
 
-
-        for (i = 0; i < numberFiles; i++) {
-            connection.query(
-                "UPDATE ebay_info SET `Sales Record Number` = " + dataToImport[i].SalesRecordNumber + ",`Order Number` = " + dataToImport[i].OrderNumber + ",`Buyer Username` = " + dataToImport[i].BuyerUsername + ",`Buyer Name` = " + dataToImport[i].BuyerName + ",`Buyer Note` = " + dataToImport[i].BuyerNote + ",`Buyer Address 1` = " + dataToImport[i].BuyerAddress1 + ",`Buyer Address 2` = " + dataToImport[i].BuyerAddress2 + ",`Buyer City` = " + dataToImport[i].BuyerCity + ",`Buyer State` = " + dataToImport[i].BuyerState + ",`Buyer Zip` = " + dataToImport[i].BuyerZip + ",`Buyer Country` = " + dataToImport[i].BuyerCountry + ",`Ship To Name` =  " + dataToImport[i].ShipToName + ",`Ship To Phone` = " + dataToImport[i].ShipToPhone + ",`Ship To Address 1` = " + dataToImport[i].ShipToAddress1 + ",`Ship To Address 2` = " + dataToImport[i].ShipToAddress2 + ",`Ship To City` = " + dataToImport[i].ShipToCity + ",`Ship To State` = " + dataToImport[i].ShipToState + ",`Ship To Zip` = " + dataToImport[i].ShipToZip + ",`Ship To Country` = " + dataToImport[i].ShipToCounty + ",`Item Number` = " + dataToImport[i].ItemNumber + ",`Item Title` = " + dataToImport[i].ItemTitle+ ",`Size` = " + dataToImport[i].Size + ",`Custom Label` = " + dataToImport[i].CustomLabel + ",`Sold Via Promoted Listings` = " + dataToImport[i].SoldViaPromotedListings + ",`Quantity` = " + dataToImport[i].Quantity + ",`Sold For` =  " + dataToImport[i].SoldFor + ",`Shipping and Handling` = " + dataToImport[i].ShippingAndHandling + ",`Seller Collected Tax` = " + dataToImport[i].SellerCollectedTax + ",`eBay Collected Tax` = " + dataToImport[i].eBayCollectedTax + ",`Total Price` = " + dataToImport[i].TotalPrice + ",`Payment Method` = " + dataToImport[i].PaymentMethod + ",`Sale Date` = " + dataToImport[i].SaleDate + ",`Year` = " + dataToImport[i].Year + ",`SaleDayName` = " + dataToImport[i].SaleDayName + ",`SaleMonthName` = " + dataToImport[i].SaleMonthName + ",`Paid On Date` = " + dataToImport[i].PaidOnDate + ",`Ship By Date` = " + dataToImport[i].ShipByDate + ",`Minimum Estimated Delivery Date` = " + dataToImport[i].MinimumEstimatedDeliveryData + ",`Maximum Estimated Delivery Date` = " + dataToImport[i].MaximumEstimatedDeliveryDate + ",`Shipped On Date` = " + dataToImport[i].ShippedOnDate + ",`Feedback Left` = " + dataToImport[i].FeedbackLeft + ",`Feedback Received` = " + dataToImport[i].FeedbackReceived + ",`My Item Note` = " + dataToImport[i].MyItemNote + ",`PayPal Transaction ID` = " + dataToImport[i].PayPalTransactionID + ",`Shipping Service` = " + dataToImport[i].ShippingService + ",`Tracking Number` = " + dataToImport[i].TrackingNumber + ",`Transaction ID` = " + dataToImport[i].TransactionID + ",`Variation Details` = " + dataToImport[i].VariationDetails + ",`Global Shipping Program` = " + dataToImport[i].GlobalShippingProgram + ",`Global Shipping Reference ID` = " + dataToImport[i].GlobalShippingReferenceID + ",`Click And Collect` = " + dataToImport[i].ClickAndCollect + ",`Click And Collect Reference Number` = " + dataToImport[i].ClickAndCollectReferenceNumber + ",`eBay Plus` = " + dataToImport[i].eBayPlus + ",`eBay Collected Tax And Fees Included in Total` = " + dataToImport[i].eBayCollectedTaxAndFeesInTotal,
-                    function(err, results, fields) {
-                        if (err) {
-                            console.log("Error uploading to mariadb: " + err);
-                        } else {
-                            console.log(results);
-                            console.log(fields);
-                        } 
-                    }
-            );
-        }
+        connection.query(
+          'SELECT * from ebay_info',
+          function(err, results, fields) {
+            bound(() => {
+              if (err) {
+                  console.log("Error pulling data: " + err);
+              } else  {
+                  console.dir(results.length);
+                  // console.dir(fields);
+                  console.log(results[0].['Sales Record Number']);
+                  Meteor.call('saveDataToMongo', results, function(err, result) {
+                      if (err) {
+                          console.log("Error calling Mongo to save db data: " + err);
+                      } else {
+                          console.log("Successfully called the method and saved data to Mongo.");
+                      }
+                  });
+              }
+            });
+          });
     },
-    'markDataSavedToMariaDB' (dataSaved) {
-
+    'saveDataToMongo' (results) {
+        for (i=0; i<results.length; i++) {
+            ImportData.insert({
+                SalesRecordNumber: results[i].['Sales Record Number'],
+                BuyerAddress1: results[i].['Buyer Address 1'],
+                BuyerAddress2: results[i].['Buyer Address 2'],
+                BuyerCity: results[i].['Buyer City'],
+                BuyerState: results[i].['Buyer State'],
+                BuyerZip: results[i].['Buyer Zip'],
+                BuyerCounty: results[i].['Buyer Country'],
+                BuyerName: results[i].['Buyer Name'],
+                BuyerEmail: results[i].['Buyer Email'],
+                BuyerNote: results[i].['Buyer Note'],
+                BuyerUsername: results[i].['Buyer Username'],
+                CustomLabel: results[i].['Custom Label'],
+                ItemNumber: results[i].['Item Number'],
+                ItemTitle: results[i].['Item Title'],
+                Size: results[i].Size,
+                FeedbackLeft: results[i].['Feedback Left'],
+                FeedbackReceived: results[i].['Feedback Received'],
+                MaximumEstimatedDeliveryDate: dayjs(results[i].['Maximum Estimated Delivery Date']).format('YYYY-MM-DD'),
+                MinimumEstimatedDeliveryData: dayjs(results[i].['Minimum Estimated Delivery Date']).format('YYYY-MM-DD'),
+                MyItemNote: results[i].['My Item Note'],
+                OrderNumber: results[i].['Order Number'],
+                PaidOnDate: dayjs(results[i].['Paid On Date']).format('YYYY-MM-DD'),
+                PayPalTransactionID: results[i].['PayPal Transaction ID'],
+                PaymentMethod: results[i].['Payment Method'],
+                Quantity: results[i].Quantity,
+                SaleDate: dayjs(results[i].['Sale Date']).format('YYYY-MM-DD'),
+                ShipByDate: dayjs(results[i].['Ship By Date']).format('YYYY-MM-DD'),
+                ShipToAddress1: results[i].['Ship To Address 1'],
+                ShipToAddress2: results[i].['Ship To Address 2'],
+                ShipToCity: results[i].['Ship To City'],
+                ShipToState: results[i].['Ship To State'],
+                ShipToZip: results[i].['Ship To Zip'],
+                ShipToCountry: results[i].['Ship To Country'],
+                ShipToName: results[i].['Ship To Name'],
+                ShipToPhone: results[i].['Ship To Phone'],
+                ShippedOnDate: dayjs(results[i].['Shipped On Date']).format('YYYY-MM-DD'),
+                eBayCollectedTax: results[i].['eBay Collected Tax'],
+                ShippingAndHandling: results[i].['Shipping And Handling'],
+                ShippingService: results[i].['Shipping Service'],
+                SoldFor: results[i].['Sold For'],
+                SoldViaPromotedListings: results[i].['Sold Via Promoted Listings'],
+                TotalPrice: results[i].['Total Price'],
+                TrackingNumber: results[i].['Tracking Number'],
+                TransactionID: results[i].['Transaction ID'],
+                eBayCollectedTaxAndFeesInTotal: results[i].['eBay Collected Tax and Fees Included in Total'],
+                eBayPlus: results[i].['eBay Plus'],
+                SellerCollectedTax: results[i].['Seller Collected Tax'],
+                VariationDetails: results[i].['Variation Details'],
+                GlobalShippingProgram: results[i].['GlobalShippingProgram'],
+                GlobalShippingReferenceID: results[i].['Global Shipping Reference ID'],
+                ClickAndCollect: results[i].['Click And Collect'],
+                ClickAndCollectReferenceNumber: results[i].['Click And Collect Reference Number'],
+                Year: dayjs(results[i].['Sale Date']).format('YYYY'),
+                SaleDayName: dayjs(results[i].['Sale Date']).format('dddd'),
+                SaleMonthName: dayjs(results[i].['Sale Date']).format('MMMM'),
+            });
+        }
     },
 });
