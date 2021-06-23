@@ -6,6 +6,7 @@
         <div class="column">
             <label for="data-field">Data Field</label>
             <select name="data-field" id="data-field" class="data-field">
+                <option value="" disabled selected>Choose one...</option>
                 <option value="Sold For">Sold For</option>
                 <option value="Shipping and Handling">Shipping And Handling</option>
                 <option value="Total Price">Total Price</option>
@@ -16,12 +17,22 @@
         <div class="column">
             <label for="convert-to">Convert To Type</label>
             <select name="covert-to" id="convert-to" class="convert-to">
+                <option value="" disabled selected>Choose one...</option>
                 <option value="Currency">Currency</option>
                 <option value="Date">Date</option>
                 <option value="Date/Time">Date/Time</option>
                 <option value="Integer">Integer</option>
                 <option value="Floating Point">Floating Point</option>
             </select>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="column">
+            <button class="showDataPreview" id="showDataPreview">Show Data Preview</button>
+        </div>
+        <div class="column">
+            <button class="green right convertData" id="convertData">Conver Data</button>
         </div>
     </div>
 </template>
