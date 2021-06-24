@@ -20,6 +20,17 @@ Template.convertData.helpers({
         
         return ImportData.find({}, queryParam);
     },
+    docKeys: function() {
+        let docKeys = [];
+        let doc = ImportData.findOne({});
+        for (key in doc) {
+            let myKey = {};
+            myKey["key"] = key;
+            docKeys.push(myKey);
+        }
+        console.dir(docKeys);
+        return docKeys;
+    },
 });
 
 Template.convertData.events({
@@ -30,5 +41,9 @@ Template.convertData.events({
         Session.set("queryKey", key);
         Session.set("convertTo", convType);
         Session.set("showDataNow", true);
+    },
+    "change #data-field" (event) {
+        let chosen = $("#data-field").val();
+        console.log(chosen);
     },
 });

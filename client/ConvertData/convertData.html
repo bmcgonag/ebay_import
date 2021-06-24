@@ -7,11 +7,14 @@
             <label for="data-field">Data Field</label>
             <select name="data-field" id="data-field" class="data-field">
                 <option value="" disabled selected>Choose one...</option>
-                <option value="Sold For">Sold For</option>
+                {{#each docKeys}}
+                    <option value="{{key}}">{{key}}</option>
+                {{/each}}
+                <!-- <option value="Sold For">Sold For</option>
                 <option value="Shipping and Handling">Shipping And Handling</option>
                 <option value="Total Price">Total Price</option>
                 <option value="Sale Date">Sale Date</option>
-                <option value="Shipped On Date">Shipped On Date</option>
+                <option value="Shipped On Date">Shipped On Date</option> -->
             </select>
         </div>
         <div class="column">
