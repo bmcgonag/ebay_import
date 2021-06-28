@@ -1,6 +1,8 @@
 <template name="verifyData">
     <h2>Verification</h2>
-    <p>Verify the information pulled from the file.</p>
+    <p>Enter the number of items you want to view.</p>
+    <input type="number" id="numberOfItems" />
+    {{#if Template.subscriptionsReady}}
     <table>
         <thead>
             <tr>
@@ -19,4 +21,7 @@
         {{/each}}
         </tbody>
     </table>
+    {{else}}
+        {{> spinner}}
+    {{/if}}
 </template>

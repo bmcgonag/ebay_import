@@ -208,6 +208,12 @@ Meteor.methods({
                 }
             }
 
+            let ebayTax = parseFloat(results.data[i].['eBay Collected Tax'].split('$'));
+            let SandH = parseFloat(results.data[i].['Shipping And Handling'].split('$'));
+            let soldFor = parseFloat(results.data[i].['Sold For'].split('$'));
+            let sellerTax = parseFloat(results.data[i].['Seller Collected Tax'].split('$'));
+            let total = parseFloat(results.data[i].['Total Price'].split('$'));
+
             ImportData.insert({
                 SalesRecordNumber: results.data[i].['Sales Record Number'],
                 BuyerAddress1: results.data[i].['Buyer Address 1'],
@@ -245,17 +251,17 @@ Meteor.methods({
                 ShipToName: results.data[i].['Ship To Name'],
                 ShipToPhone: results.data[i].['Ship To Phone'],
                 ShippedOnDate: dayjs(results.data[i].['Shipped On Date']).format('YYYY-MM-DD'),
-                eBayCollectedTax: results.data[i].['eBay Collected Tax'],
-                ShippingAndHandling: results.data[i].['Shipping And Handling'],
+                eBayCollectedTax: ebayTax,
+                ShippingAndHandling: SandH,
                 ShippingService: results.data[i].['Shipping Service'],
-                SoldFor: results.data[i].['Sold For'],
+                SoldFor: soldFor,
                 SoldViaPromotedListings: results.data[i].['Sold Via Promoted Listings'],
-                TotalPrice: results.data[i].['Total Price'],
+                TotalPrice: total,
                 TrackingNumber: results.data[i].['Tracking Number'],
                 TransactionID: results.data[i].['Transaction ID'],
                 eBayCollectedTaxAndFeesInTotal: results.data[i].['eBay Collected Tax and Fees Included in Total'],
                 eBayPlus: results.data[i].['eBay Plus'],
-                SellerCollectedTax: results.data[i].['Seller Collected Tax'],
+                SellerCollectedTax: sellerTax,
                 VariationDetails: results.data[i].['Variation Details'],
                 GlobalShippingProgram: results.data[i].['GlobalShippingProgram'],
                 GlobalShippingReferenceID: results.data[i].['Global Shipping Reference ID'],
@@ -299,13 +305,18 @@ Meteor.methods({
             },
         });
     },
-    'pullDataFromMariaDB' () {
+    'pullDataFromMariaDB' (dbhost, dbuser, dbpass, dbname) {
+        check(dbuser, String); // brian
+        check(dbhost, String); // 192.168.7.125
+        check(dbpass, String); // R3tr0gr4de! 
+        check(dbname, String); // ebay_data
+        
         // connect to mariadb
         const connection = mysql.createConnection({
-            host: '192.168.7.125',
-            user: 'brian',
-            password: 'R3tr0gr4de!',
-            database: 'ebay_data'
+            host: dbhost,
+            user: dbuser,
+            password: dbpass,
+            database: dbname
         });
 
         const bound = Meteor.bindEnvironment((callback) => {callback();});
@@ -391,5 +402,23 @@ Meteor.methods({
                 SaleMonthName: dayjs(results[i].['Sale Date']).format('MMMM'),
             });
         }
+    },
+    'convertOldData' (itemId, newSoldFor, neweBayCollectedTax, newShippingAndHandling, newSellerCollectedTax, newTotalPrice) {
+        check(itemId, String);
+        check(newSoldFor, Number);
+        check(neweBayCollectedTax, Number);
+        check(newShippingAndHandling, Number);
+        check(newSellerCollectedTax, Number);
+        check(newTotalPrice, Number);
+
+        ImportData.update({ _id: itemId }, {
+            $set: {
+                SoldFor: newSoldFor,
+                eBayCollectedTax: neweBayCollectedTax,
+                ShippingAndHandling: newShippingAndHandling,
+                SellerCollectedTax: newSellerCollectedTax,
+                TotalPrice: newTotalPrice,
+            }
+        });
     },
 });

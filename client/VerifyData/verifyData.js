@@ -6,18 +6,25 @@ Template.verifyData.onCreated(function() {
 });
 
 Template.verifyData.onRendered(function() {
-
+    Session.set("noOfItems", 100);
 });
 
 Template.verifyData.helpers({
     items: function() {
-        let data = ImportData.find({});
+        let numItems = Session.get("noOFItems");
+        let data = ImportData.find({}, { limit: numItems });
         console.dir(data);
         return data;
     },
 });
 
 Template.verifyData.events({
+    'change #numberOfItems' (event) {
+        event.preventDefault();
+        let numItems = $('#numberOfItems').val();
+        console.log("Number of Items: " + numItems);
+        Session.set("noOfItems", numItems);
+    },
     'change .Size-Input' (event) {
         event.preventDefault();
         let edit_id = event.currentTarget.id;

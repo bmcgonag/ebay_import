@@ -1,41 +1,18 @@
 <template name="convertData">
     <h2>Convert Data into Proper Formats</h2>
-    <p>Select the field, then select the data type you want to convert it to.</p>
+    <p>Click below to convert Currency and Date fields.</p>
+    <br />
     <br />
     <div class="row">
         <div class="column">
-            <label for="data-field">Data Field</label>
-            <select name="data-field" id="data-field" class="data-field">
-                <option value="" disabled selected>Choose one...</option>
-                {{#each docKeys}}
-                    <option value="{{key}}">{{key}}</option>
-                {{/each}}
-                <!-- <option value="Sold For">Sold For</option>
-                <option value="Shipping and Handling">Shipping And Handling</option>
-                <option value="Total Price">Total Price</option>
-                <option value="Sale Date">Sale Date</option>
-                <option value="Shipped On Date">Shipped On Date</option> -->
-            </select>
-        </div>
-        <div class="column">
-            <label for="convert-to">Convert To Type</label>
-            <select name="covert-to" id="convert-to" class="convert-to">
-                <option value="" disabled selected>Choose one...</option>
-                <option value="Currency">Currency</option>
-                <option value="Date">Date</option>
-                <option value="Date/Time">Date/Time</option>
-                <option value="Integer">Integer</option>
-                <option value="Floating Point">Floating Point</option>
-            </select>
+            <button class="green convertData" id="convertData">Conver Data</button>
         </div>
     </div>
-    <br />
-    <div class="row">
+    {{#if $eq dataSuccess true}}
+    <div class="row green-success">
         <div class="column">
-            <button class="showDataPreview" id="showDataPreview">Show Data Preview</button>
-        </div>
-        <div class="column">
-            <button class="green right convertData" id="convertData">Conver Data</button>
+            Data Successfully converted!
         </div>
     </div>
+    {{/if}}
 </template>

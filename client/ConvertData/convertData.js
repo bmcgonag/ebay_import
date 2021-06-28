@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import { ImportData } from '../../imports/api/importData.js';
 
 Template.convertData.onCreated(function() {
@@ -9,41 +10,37 @@ Template.convertData.onRendered(function() {
 });
 
 Template.convertData.helpers({
-    showData: function() {
-        return Session.get("showDataNow");
-    },
-    dataPreview: function() {
-        let queryKey = Session.get("queryKey");
-        let convertTo = Session.get("convertTo");
-        let queryParam = {};
-        queryParam[queryKey] = 1;
-        
-        return ImportData.find({}, queryParam);
-    },
-    docKeys: function() {
-        let docKeys = [];
-        let doc = ImportData.findOne({});
-        for (key in doc) {
-            let myKey = {};
-            myKey["key"] = key;
-            docKeys.push(myKey);
-        }
-        console.dir(docKeys);
-        return docKeys;
+    convertSuccess: function() {
+        return Session.get("dataconverted");
     },
 });
 
 Template.convertData.events({
-    'click #showDataPreview' (event) {
+    'click #convertData' (event) {
         event.preventDefault();
-        let key = $("#data-field").val();
-        let convType = $("#convert-to").val();
-        Session.set("queryKey", key);
-        Session.set("convertTo", convType);
-        Session.set("showDataNow", true);
-    },
-    "change #data-field" (event) {
-        let chosen = $("#data-field").val();
-        console.log(chosen);
+
+        let coll = ImportData.find({}).fetch();
+        let collLen = coll.length;
+
+        for (i=0; i < collLen; i++) {
+                if (typeof coll[i].SoldFor == "string") {
+                let newSoldFor = parseFloat((coll[i].SoldFor).split('$'));
+                let neweBayCollectedTax = parseFloat((coll[i].eBayCollectedTax).split('$'));
+                let newShippingAndHandling = parseFloat((coll[i].ShippingAndHandling).split('$'));
+                let newTotalPrice = parseFloat((coll[i].TotalPrice).split('$'));
+                let newSellerCollectedTax = parseFloat((coll[i].SellerCollectedTax).split('$'));
+                let DataSuccess = 0;
+                let itemId = coll[i]._id;
+                // console.log("Orig VAlue: " + coll[i].SoldFor + " | new value: " + newSoldFor + " with Id: " + itemId);
+                Meteor.call("convertOldData", itemId, newSoldFor, neweBayCollectedTax, newShippingAndHandling, newSellerCollectedTax, newTotalPrice, function(err, result) {
+                    if (err) {
+                        console.log("Error converting data: " + err);
+                    } else {
+                        console.log("Data successfully converted.");
+                    }
+                });
+            };
+        }
+
     },
 });
