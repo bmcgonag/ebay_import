@@ -5,11 +5,13 @@ Template.importDb.onCreated(function() {
 });
 
 Template.importDb.onRendered(function() {
-
+    Session.set("dbPull", "none");
 });
 
 Template.importDb.helpers({
-
+    dbPull: function() {
+        return Session.get("dbPull");
+    }
 });
 
 Template.importDb.events({
@@ -23,8 +25,10 @@ Template.importDb.events({
         Meteor.call('pullDataFromMariaDB', dbhost, dbuser, dbpass, dbname, function(err, result) {
             if (err) {
                 console.log("Error puling data from DB: " + err);
+                Session.set("dbPull", "error");
             } else {
                 console.log("Successfully pulled data from DB!");
+                Session.set("dbPull", "success");
             }
         });
     },

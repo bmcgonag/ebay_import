@@ -1,0 +1,16 @@
+.red {
+    background-color: red;
+    color: yellow;
+}
+
+.success {
+    border: 1 px solid green;
+    background-color: rgb(2, 167, 2);
+    color: white;
+}
+
+.error {
+    border: 1 px solid red;
+    background-color: rgb(172, 0, 0);
+    color: black;
+}

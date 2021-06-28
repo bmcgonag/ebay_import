@@ -421,4 +421,7 @@ Meteor.methods({
             }
         });
     },
+    'removeTheData' () {
+        return ImportData.remove({});
+    },
 });

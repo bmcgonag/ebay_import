@@ -26,4 +26,19 @@
             <button id="importFromDb" class="green right">Import from Database</button>
         </div>
     </div>
+    <div class="row">
+        <div class="column">
+            {{#if $eq dbPull "success"}}
+                <div class="success">
+                    Information Successfully Pulled from SQL DB!
+                </div>
+            {{/if}}
+
+            {{#if $eq dbPUll "error"}}
+                <div class="error">
+                    Error pulling data from the SQL Database!
+                </div>
+            {{/if}}
+        </div>
+    </div>
 </template>
