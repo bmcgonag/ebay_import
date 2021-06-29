@@ -344,6 +344,13 @@ Meteor.methods({
     },
     'saveDataToMongo' (results) {
         for (i=0; i<results.length; i++) {
+
+            let ebayTax = parseFloat(results[i].['eBay Collected Tax'].split('$'));
+            let SandH = parseFloat(results[i].['Shipping And Handling'].split('$'));
+            let soldFor = parseFloat(results[i].['Sold For'].split('$'));
+            let sellerTax = parseFloat(results[i].['Seller Collected Tax'].split('$'));
+            let total = parseFloat(results[i].['Total Price'].split('$'));
+
             ImportData.insert({
                 SalesRecordNumber: results[i].['Sales Record Number'],
                 BuyerAddress1: results[i].['Buyer Address 1'],
@@ -381,17 +388,17 @@ Meteor.methods({
                 ShipToName: results[i].['Ship To Name'],
                 ShipToPhone: results[i].['Ship To Phone'],
                 ShippedOnDate: dayjs(results[i].['Shipped On Date']).format('YYYY-MM-DD'),
-                eBayCollectedTax: results[i].['eBay Collected Tax'],
-                ShippingAndHandling: results[i].['Shipping And Handling'],
+                eBayCollectedTax: ebayTax,
+                ShippingAndHandling: SandH,
                 ShippingService: results[i].['Shipping Service'],
-                SoldFor: results[i].['Sold For'],
+                SoldFor: soldFor,
                 SoldViaPromotedListings: results[i].['Sold Via Promoted Listings'],
-                TotalPrice: results[i].['Total Price'],
+                TotalPrice: total,
                 TrackingNumber: results[i].['Tracking Number'],
                 TransactionID: results[i].['Transaction ID'],
                 eBayCollectedTaxAndFeesInTotal: results[i].['eBay Collected Tax and Fees Included in Total'],
                 eBayPlus: results[i].['eBay Plus'],
-                SellerCollectedTax: results[i].['Seller Collected Tax'],
+                SellerCollectedTax: sellerTax,
                 VariationDetails: results[i].['Variation Details'],
                 GlobalShippingProgram: results[i].['GlobalShippingProgram'],
                 GlobalShippingReferenceID: results[i].['Global Shipping Reference ID'],
