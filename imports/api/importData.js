@@ -214,8 +214,24 @@ Meteor.methods({
             let sellerTax = parseFloat((results.data[i].['Seller Collected Tax']).substring(1));
             let total = parseFloat(results.data[i].['Total Price'].substring(1));
 
+            if (typeof ebayTax != "number") {
+                ebayTax = 0.00;
+            }
+
+            if (typeof SandH != "number") {
+                ebayTax = 0.00;
+            }
+
             if (typeof soldFor != "number") {
-                console.log("Got NaN: Sold For was: " + results.data[i].['Sold For']);
+                soldFor = 0.00;
+            }
+
+            if (typeof sellerTax != "number") {
+                sellerTax = 0.00;
+            }
+
+            if (typeof total != "number") {
+                total = 0.00;
             }
 
             ImportData.insert({
@@ -349,14 +365,30 @@ Meteor.methods({
     'saveDataToMongo' (results) {
         for (i=0; i<results.length; i++) {
 
-            let ebayTax = parseFloat(results[i].['eBay Collected Tax'].substring(1));
-            let SandH = parseFloat(results[i].['Shipping And Handling'].substring(1));
-            let soldFor = parseFloat(results[i].['Sold For'].substring(1));
-            let sellerTax = parseFloat(results[i].['Seller Collected Tax'].substring(1));
-            let total = parseFloat(results[i].['Total Price'].substring(1));
+            let ebayTax = results[i].EbayCollectedTax;
+            let SandH = results[i].ShippingAndHandling;
+            let soldFor = results[i].SoldFor;
+            let sellerTax = results[i].SellerCollectedTax;
+            let total = results[i].TotalPrice;
+
+            if (typeof ebayTax != "number") {
+                ebayTax = 0.00;
+            }
+
+            if (typeof SandH != "number") {
+                ebayTax = 0.00;
+            }
 
             if (typeof soldFor != "number") {
-                console.log("Got NaN: The entry was:   " + results[i].['Sold For']);
+                soldFor = 0.00;
+            }
+
+            if (typeof sellerTax != "number") {
+                sellerTax = 0.00;
+            }
+
+            if (typeof total != "number") {
+                total = 0.00;
             }
 
             ImportData.insert({
