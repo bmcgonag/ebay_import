@@ -208,11 +208,15 @@ Meteor.methods({
                 }
             }
 
-            let ebayTax = parseFloat(results.data[i].['eBay Collected Tax'].split('$'));
-            let SandH = parseFloat(results.data[i].['Shipping And Handling'].split('$'));
-            let soldFor = parseFloat(results.data[i].['Sold For'].split('$'));
-            let sellerTax = parseFloat(results.data[i].['Seller Collected Tax'].split('$'));
-            let total = parseFloat(results.data[i].['Total Price'].split('$'));
+            let ebayTax = parseFloat(results.data[i].['eBay Collected Tax'].substring(1));
+            let SandH = parseFloat(results.data[i].['Shipping And Handling'].substring(1));
+            let soldFor = parseFloat((results.data[i].['Sold For']).substring(1));
+            let sellerTax = parseFloat((results.data[i].['Seller Collected Tax']).substring(1));
+            let total = parseFloat(results.data[i].['Total Price'].substring(1));
+
+            if (typeof soldFor != "number") {
+                console.log("Got NaN: Sold For was: " + results.data[i].['Sold For']);
+            }
 
             ImportData.insert({
                 SalesRecordNumber: results.data[i].['Sales Record Number'],
@@ -345,11 +349,15 @@ Meteor.methods({
     'saveDataToMongo' (results) {
         for (i=0; i<results.length; i++) {
 
-            let ebayTax = parseFloat(results[i].['eBay Collected Tax'].split('$'));
-            let SandH = parseFloat(results[i].['Shipping And Handling'].split('$'));
-            let soldFor = parseFloat(results[i].['Sold For'].split('$'));
-            let sellerTax = parseFloat(results[i].['Seller Collected Tax'].split('$'));
-            let total = parseFloat(results[i].['Total Price'].split('$'));
+            let ebayTax = parseFloat(results[i].['eBay Collected Tax'].substring(1));
+            let SandH = parseFloat(results[i].['Shipping And Handling'].substring(1));
+            let soldFor = parseFloat(results[i].['Sold For'].substring(1));
+            let sellerTax = parseFloat(results[i].['Seller Collected Tax'].substring(1));
+            let total = parseFloat(results[i].['Total Price'].substring(1));
+
+            if (typeof soldFor != "number") {
+                console.log("Got NaN: The entry was:   " + results[i].['Sold For']);
+            }
 
             ImportData.insert({
                 SalesRecordNumber: results[i].['Sales Record Number'],
