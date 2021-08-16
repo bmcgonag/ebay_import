@@ -1,6 +1,6 @@
 <template name="importDb">
-    <h2>Import From a Database</h2>
-    <p>Use this view to setup and import data from a SQL database (MySQL, MariaDB, PostgreSQL, etc). </p>
+    <h2>Import From / Export To a Database</h2>
+    <p>Use this view to setup and import / export data from a SQL database (MySQL, MariaDB, PostgreSQL, etc). </p>
     <br />
     <div class="row">
         <div class="column">
@@ -20,10 +20,21 @@
     </div>
     <div class="row">
         <div class="column">
-            <button id="testDBConnection">Test Connection</button>
+            <input type="text" id="dbport" class="dbport" placeholder="DB Port Number" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <button id="saveConnectionInfon" class="green" {{fieldsGood}}>Save</button>
         </div>
         <div class="column">
-            <button id="importFromDb" class="green right">Import from Database</button>
+            <button id="testDBConnection" {{fieldsGood}}>Test Connection</button>
+        </div>
+        <div class="column">
+            <button id="exportToDb" class="green right" {{fieldsGood}}>Export to Database</button>
+        </div>
+        <div class="column">
+            <button id="importFromDb" class="green right" {{fieldsGood}}>Import from Database</button>
         </div>
     </div>
     <div class="row">
