@@ -4,23 +4,23 @@
     <br />
     <div class="row">
         <div class="column">
-            <input type="text" id="dbhost" class="dbhost" placeholder="DB Hostname or IP Address" />
+            <input type="text" id="dbhost" class="dbhost" placeholder="DB Hostname or IP Address" value="{{#if dbConn.dbhost}}{{dbConn.dbhost}}{{/if}}" />
         </div>
         <div class="column">
-            <input type="text" id="dbname" class="dbname" placeholder="DB Name" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="column">
-            <input type="text" id="dbuser" class="dbuser" placeholder="DB Username" />
-        </div>
-        <div class="column">
-            <input type="password" id="dbpass" class="dbpass" placeholder="DB Password" />
+            <input type="text" id="dbname" class="dbname" placeholder="DB Name" value="{{#if dbConn.dbname}}{{dbConn.dbname}}{{/if}}" />
         </div>
     </div>
     <div class="row">
         <div class="column">
-            <input type="text" id="dbport" class="dbport" placeholder="DB Port Number" />
+            <input type="text" id="dbuser" class="dbuser" placeholder="DB Username" value="{{#if dbConn.dbuser}}{{dbConn.dbuser}}{{/if}}" />
+        </div>
+        <div class="column">
+            <input type="password" id="dbpass" class="dbpass" placeholder="DB Password" value="{{#if dbConn.dbpass}}{{dbConn.dbpass}}{{/if}}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <input type="text" id="dbport" class="dbport" placeholder="DB Port Number" value="{{#if dbConn.dbport}}{{dbConn.dbport}}{{/if}}" />
         </div>
     </div>
     <div class="row">

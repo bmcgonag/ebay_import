@@ -9,10 +9,10 @@ Meteor.publish("importObject", function() {
     }
 });
 
-Meteor.publish("savedCreds", function() {
+Meteor.publish('savedCreds', function() {
     try {
         return DBConnect.find({});
     } catch (error) {
-        console.log("Error publishing DB Connecting creds: " + error);
+        console.log("Error retrieving saved db credentials: " + error);
     }
 });

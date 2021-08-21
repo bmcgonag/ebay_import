@@ -1,5 +1,5 @@
 import { ImportData } from '../../imports/api/importData.js';
-import { DBConnect} from '../../imports/api/dbConnection.js';
+import { DBConnect } from '../../imports/api/dbConnection.js';
 
 Template.importDb.onCreated(function() {
     this.subscribe("importObject");
@@ -33,6 +33,10 @@ Template.importDb.helpers({
             console.log("returning empty string.");
             return "";
         }
+    },
+    dbConn: function() {
+        let dbconn = DBConnect.findOne({});
+        return dbconn;
     },
 });
 
@@ -127,7 +131,7 @@ Template.importDb.events({
             Session.set("dbportval", true);
         }
     },
-    'click #testConnection' (event) {
+    'click #testDBConnection' (event) {
         event.preventDefault();
 
         let dbhost = $("#dbhost").val();
@@ -138,6 +142,12 @@ Template.importDb.events({
 
         // Call the method to test the db connection
 
-        
+        Meteor.call("test.connection", function(err, result) {
+            if (err) {
+                console.log("Error testing connection: " + err);
+            } else {
+                console.log("Connection Successful: " + result);
+            }
+        });
     },
 });
