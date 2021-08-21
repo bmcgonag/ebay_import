@@ -1,7 +1,9 @@
 import { ImportData } from '../../imports/api/importData.js';
+import { DBConnect} from '../../imports/api/dbConnection.js';
 
 Template.importDb.onCreated(function() {
     this.subscribe("importObject");
+    this.subscribe("savedCreds");
 });
 
 Template.importDb.onRendered(function() {
@@ -74,32 +76,14 @@ Template.importDb.events({
         let dbpass = $("#dbpass").val();
         let dbport = $("#dbport").val();
 
-        if (dbhost == "" || dbhost == null) {
-            console.log("dbhost is required.");
-            return;
-        }
-
-        if (dbname == "" || dbname == null) {
-            console.log("dbname is required.");
-            return;
-        }
-
-        if (dbuser == "" || dbuser == null) {
-            console.log("dbuser is required.");
-            return;
-        }
-
-        if (dbpass == "" || dbpass == null) {
-            console.log("dbpass is required.");
-            return;
-        }
-
-        if (dbport == "" || dbport == null) {
-            console.log("dbport is required.");
-            return;
-        }
-
         // call method to save the data to the database now.
+        Meteor.call("saveDBCreds", dbhost, dbname, dbuser, dbpass, dbport, function(err, result) {
+            if (err) {
+                console.log("Error saving DB Credentials: " + err);
+            } else {
+                console.log("Successfully Saved DB Credentials.");
+            }
+        });
 
 
     },

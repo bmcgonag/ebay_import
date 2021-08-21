@@ -500,4 +500,7 @@ Meteor.methods({
             );
         }
     },
+    'test.connection' () {
+
+    },
 });
