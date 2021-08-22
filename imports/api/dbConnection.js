@@ -20,12 +20,26 @@ Meteor.methods({
         check(dbpass, String);
         check(dbport, String);
 
-        return DBConnect.insert({
-            dbhost: dbhost,
-            dbname: dbname,
-            dbuser: dbuser,
-            dbpass: dbpass,
-            dbport: dbport
-        });
+        let dbCredscount = DBConnect.find({}).count();
+        let dbCreds = DBConnect.findOne({});
+        if (dbCredscount > 0) {
+            return DBConnect.update({ _id: dbCreds._id }, {
+                $set: {
+                    dbhost: dbhost,
+                    dbname: dbname,
+                    dbuser: dbuser,
+                    dbpass: dbpass,
+                    dbport: dbport
+                }
+            });
+        } else {
+            return DBConnect.insert({
+                dbhost: dbhost,
+                dbname: dbname,
+                dbuser: dbuser,
+                dbpass: dbpass,
+                dbport: dbport
+            });
+        }  
     },
 });

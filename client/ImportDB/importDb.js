@@ -27,8 +27,14 @@ Template.importDb.helpers({
         let dbport = Session.get("dbportval");
 
         if (dbhost == false || dbname == false || dbuser == false || dbpass == false || dbport == false) {
-            console.log("returning disabled.");
-            return "disabled";
+            let dbInfo = DBConnect.findOne({});
+            if (dbInfo.dbhost) {
+                console.log("returning empty string.");
+            return "";
+            } else {
+                console.log("returning disabled.");
+                return "disabled";
+            }
         } else {
             console.log("returning empty string.");
             return "";

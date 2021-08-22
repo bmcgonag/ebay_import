@@ -2,6 +2,7 @@
     <h2>Import From / Export To a Database</h2>
     <p>Use this view to setup and import / export data from a SQL database (MySQL, MariaDB, PostgreSQL, etc). </p>
     <br />
+    {{#if Template.subscriptionsReady}}
     <div class="row">
         <div class="column">
             <input type="text" id="dbhost" class="dbhost" placeholder="DB Hostname or IP Address" value="{{#if dbConn.dbhost}}{{dbConn.dbhost}}{{/if}}" />
@@ -52,4 +53,5 @@
             {{/if}}
         </div>
     </div>
+    {{/if}}
 </template>
